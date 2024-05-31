@@ -6,15 +6,17 @@ function reverseStringSimple(str) {
 
 // yang aga ribet
 function reverseStringRibet(str) {
-    let reversed = '';
-    for (let i = str.length - 1; i >= 0; i--) {
-        reversed += str[i];
-    }
-    return reversed;
+  let reversed = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    reversed += str[i];
+  }
+  return reversed;
 }
 
-console.log(reverseString("hello")); // Output: "olleh"
-console.log(reverseString("world")); // Output: "dlrow"
+console.log(reverseStringSimple("hello")); // Output: "olleh"
+console.log(reverseStringSimple("world")); // Output: "dlrow"
+console.log(reverseStringRibet("hello")); // Output: "olleh"
+console.log(reverseStringRibet("world")); // Output: "dlrow"
 
 //soal2 A
 function FizzBuzz(numb) {
@@ -46,70 +48,70 @@ console.log(secondLargest([10, 5, 20, 8])); // Output: 10
 console.log(secondLargest([1, 2, 3, 4, 5])); // Output: 4
 
 let products = [
-    { id: 1, name: "Product A", price: 1000, points: 10 },
-    { id: 2, name: "Product B", price: 2000, points: 25 },
-    { id: 3, name: "Product C", price: 5000, points: 50 },
-    { id: 4, name: "Product D", price: 8000, points: 100 },
-  ];
-  let availablePoints = 1555;
-  
-  let purchasedProducts = [];
-  let totalSpent = 0;
-  
-  //soal1 B
-  
-  function getMaxPointsProduct() {
-    let max = 0;
-    let itemId = 0;
-    for (const iterator of products) {
-      if (iterator.points > max) {
-        max = iterator.points;
-        itemId = iterator.id;
-      }
-    }
-  
-    return products.find((item) => item.id == itemId);
-  }
-  
-  let largesProduct = getMaxPointsProduct();
-  console.log({ Max: largesProduct });
-  
-  //soal2 B
-  function calculateRemainingPoints() {
-    let newArr = [];
-    let totalPoint = 0;
-    newArr = products.filter((item) => item.id !== largesProduct.id);
-    for (const item of newArr) {
-      totalPoint += item.points;
-    }
-    return totalPoint;
-  }
-  let totalRemaining = calculateRemainingPoints();
-  console.log({ totalRemainingProduct: totalRemaining });
-  
+  { id: 1, name: "Product A", price: 1000, points: 10 },
+  { id: 2, name: "Product B", price: 2000, points: 25 },
+  { id: 3, name: "Product C", price: 5000, points: 50 },
+  { id: 4, name: "Product D", price: 8000, points: 100 },
+];
+let availablePoints = 1555;
 
-  //soal 3 B
-  function redeemProducts() {
-    let dscArr = products.sort((a, b) => b.points - a.points);
-  
-    while (availablePoints > 0) {
-      let redeemed = false;
-  
-      for (let product of dscArr) {
-        if (availablePoints >= product.points) {
-          purchasedProducts.push(product);
-          availablePoints -= product.points;
-          totalSpent += product.price;
-          redeemed = true;
-        }
-      }
-      if (!redeemed) {
-        break;
-      }
+let purchasedProducts = [];
+let totalSpent = 0;
+
+//soal1 B
+
+function getMaxPointsProduct() {
+  let max = 0;
+  let itemId = 0;
+  for (const iterator of products) {
+    if (iterator.points > max) {
+      max = iterator.points;
+      itemId = iterator.id;
     }
   }
-  redeemProducts();
-  console.log(purchasedProducts);
-  console.log(totalSpent);
-  console.log(availablePoints);
-  
+
+  return products.find((item) => item.id == itemId);
+}
+
+let largesProduct = getMaxPointsProduct();
+console.log({ Max: largesProduct });
+
+//soal2 B
+function calculateRemainingPoints() {
+  let newArr = [];
+  let totalPoint = 0;
+  newArr = products.filter((item) => item.id !== largesProduct.id);
+  for (const item of newArr) {
+    totalPoint += item.points;
+  }
+  return totalPoint;
+}
+let totalRemaining = calculateRemainingPoints();
+console.log({ totalRemainingProduct: totalRemaining });
+
+//soal 3 B
+function redeemProducts() {
+  let dscArr = products.sort((a, b) => b.points - a.points);
+
+  while (availablePoints > 0) {
+    let redeemed = false;
+
+    for (let product of dscArr) {
+      if (availablePoints >= product.points) {
+        purchasedProducts.push(product);
+        availablePoints -= product.points;
+        totalSpent += product.price;
+        redeemed = true;
+      }
+    }
+    if (!redeemed) {
+      break;
+    }
+  }
+
+  return {
+    purchasedProducts: purchasedProducts,
+    totalSpent: totalSpent,
+  };
+}
+console.log(redeemProducts());
